@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Certification Stamps' Product Attribute
+ *
+ * @package CustomVendor_CertificationStamps
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use CustomVendor\CertificationStamps\Block\Stamps;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Escaper $escaper
+ * @var Stamps $block
+ */
+
+?>
+
+<div class="w-full mb-4 flex flex-col gap-4">
+    <?php foreach ($block->getProductStamps() as $key => $stampRow): ?>
+    <div class="stamp-rows stamp-row-<?= $key ?> gap-2">
+        <?php foreach ($stampRow as $stamp): ?>
+        <div class="stamp-row">
+            <?php if(array_key_exists($block->getSwatchImageUrlkey(), $stamp)): ?>
+            <img class="stamp stamp-image" src="<?= $stamp[$block->getSwatchImageUrlkey()] ?>" alt="<?= $escaper->escapeHtmlAttr($block->getRelatedAttributeCode($stamp['label'])) ?>">
+            <?php else: ?>
+            <span class="stamp"><?= $escaper->escapeHtml($block->getRelatedAttributeCode($stamp['label'])) ?></span>
+            <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endforeach; ?>
+</div>

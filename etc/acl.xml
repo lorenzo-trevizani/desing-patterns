@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Certification Stamps' Product Attribute
+ *
+ * @package CustomVendor_CertificationStamps
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="CustomVendor_CertificationStamps::settings" title="Custom Vendor Certification Stamps settings" sortOrder="45" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
