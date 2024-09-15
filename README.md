@@ -1,5 +1,3 @@
-# Design Patterns Examples
-This repository showcases various design patterns that I have implemented personally, either done on commercial work or as coding exercises.
+# Design Patterns Factory Method Example
+This repository showcase an example where I had applied the creational pattern called factory method. Checkout [Refactoring Guru](https://refactoring.guru/pt-br/design-patterns/factory-method) for a great explanation of this design pattern.
 
-## Instructions
-Each design pattern example is contained within its own branch, allowing you to explore each one individually. To access a specific design pattern, simply switch to the corresponding branch.
