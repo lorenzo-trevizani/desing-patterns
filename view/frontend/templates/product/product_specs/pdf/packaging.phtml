@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * PDP Group Sections
+ *
+ * @package CustomVendor_PDPGroupSections
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use CustomVendor\PDPGroupSections\Block\Product\View\Attributes;
+use Magento\Framework\Escaper;
+use Magento\Catalog\Helper\Output as CatalogOutputHelper;
+use Magento\Catalog\Model\Product;
+
+/**
+ * @var Attributes $block
+ * @var Escaper $escaper
+ * @var CatalogOutputHelper $output
+ */
+
+/** @var CatalogOutputHelper $catalogOutputHelper */
+$catalogOutputHelper = $this->helper(CatalogOutputHelper::class);
+
+/** @var Product $product */
+$product = $block->getProduct();
+
+$packagingAttributes = [];
+if ($attributes = $block->getAllSectionAttributes(Attributes::XML_PATH_PACKAGING_ATTRIBUTE)) {
+    foreach ($attributes as $attribute) {
+        $packagingAttributes[$attribute['code']] = $product->getResource()->getAttribute($attribute['code'])->getFrontend()->getValue($product);
+    }
+}
+?>
+
+<?php if (!empty($packagingAttributes)): ?>
+    <table class="w-full table-details table-attributes">
+        <thead>
+            <tr>
+                <th align="left" class="text-red">
+                    <?= $escaper->escapeHtml(__("PACKAGING")) ?>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($packagingAttributes as $code => $value): ?>
+                <tr>
+                    <td align="left" style="border-right: 1px solid #000;">
+                        <?= $escaper->escapeHtml($attributes[$code]['label']) ?>
+                    </td>
+                    <td align="right">
+                        <?= $escaper->escapeHtml($value) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>

@@ -1,20 +1,25 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Certification Stamps' Product Attribute
+ * PDP Group Sections
  *
- * @package CustomVendor_CertificationStamps
+ * @package CustomVendor_PDPGroupSections
  * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
  * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
  */
  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <custom_vendor_certification_stamps>
-            <general>
-                <attribute_separator>^</attribute_separator>
-                <enable_multi_row>1</enable_multi_row>
-            </general>
-        </custom_vendor_certification_stamps>
+        <CustomVendor_pdp_group_sections>
+            <feature_section>
+                <attributes_group>pim-data</attributes_group>
+            </feature_section>
+            <packaging_section>
+                <attributes_group>pim-data</attributes_group>
+            </packaging_section>
+            <compliance_section>
+                <attributes_group>pim-data</attributes_group>
+            </compliance_section>
+        </CustomVendor_pdp_group_sections>
     </default>
 </config>

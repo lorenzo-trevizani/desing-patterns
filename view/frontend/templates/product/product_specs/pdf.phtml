@@ -1,0 +1,220 @@
+<?php
+
+/**
+ * PDP Group Sections
+ *
+ * @package CustomVendor_PDPGroupSections
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Hyva\Theme\Model\ViewModelRegistry;
+use CustomVendor\PDPGroupSections\ViewModel\ProductDetails;
+
+/**
+ * @var ViewModelRegistry $viewModels
+ * @var View $block
+ * @var Escaper $escaper
+ */
+
+$product = $block->getProduct();
+
+/** @var ProductDetails $productDetailsViewModel */
+$productDetailsViewModel = $viewModels->require(ProductDetails::class);
+$imageUrl = $productDetailsViewModel->getImageUrl($product);
+
+?>
+
+<htmlpageheader name="Header">
+    <table class="w-full table-two-columns">
+        <tbody>
+            <tr>
+                <td valign="top" align="center">
+                    <img style="width: 250px;" src="<?= $block->getViewFileUrl('CustomVendor_OrderHistoryFrontend::images/logo.png') ?>" alt="<?= $escaper->escapeHtmlAttr(__("Satco | Nuvo")) ?>" class="logo" />
+                    <div>
+                        <img style="height: 150px;width: auto;" src="<?= $escaper->escapeUrl($imageUrl); ?>" class="w-full" />
+                    </div>
+                </td>
+                <td valign="top">
+                    <table class="w-full">
+                        <tbody>
+                            <tr>
+                                <td class="textline w-full"><?= $escaper->escapeHtml(__("Project / Job Name:")) ?></td>
+                            </tr>
+                            <tr>
+                                <td class="textline w-full"><?= $escaper->escapeHtml(__("Location:")) ?></td>
+                            </tr>
+                            <tr>
+                                <td class="textline w-full"><?= $escaper->escapeHtml(__("Fixture Type:")) ?></td>
+                            </tr>
+                            <tr>
+                                <td class="textline w-full"><?= $escaper->escapeHtml(__("Notes:")) ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-product-name">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong><?= $escaper->escapeHtml($product->getSku()) ?></strong> - <?= $escaper->escapeHtml($product->getDescription()) ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <?= $block->getChildHtml('pdf.certification.stamps') ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</htmlpageheader>
+
+
+<table class="w-full table-two-columns">
+    <tbody>
+        <tr>
+            <td valign="top" class="pr-2">
+                <?= $block->getChildHtml('pdf.attributes') ?>
+                <?= $block->getChildHtml('pdf.attributes.features') ?>
+            </td>
+            <td valign="top" class="pl-2">
+                <?= $block->getChildHtml('pdf.attributes.packaging') ?>
+                <?= $block->getChildHtml('pdf.attributes.compliance') ?>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<htmlpagefooter name="Footer">
+    <table class="w-full footer">
+        <tbody>
+            <tr>
+                <td align="left" class="comments-cell">
+                    <?= $escaper->escapeHtml(__("SATCO.COM | 800-437-2826")) ?>
+                </td>
+                <td align="right" class="copyright">
+                    <div><?= $escaper->escapeHtml(__("© Satco Products, Inc.")) ?></div>
+                    <div><?= $escaper->escapeHtml(__("All rights reserved ")) . date('Y') ?></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</htmlpagefooter>
+
+<sethtmlpagefooter name="Footer" value="on" />
+<sethtmlpageheader name="Header" value="on" />
+
+<style>
+
+    @page {
+        footer: html_Footer;
+        header: html_Header;
+    }
+
+    .pr-2 {
+        padding-right: 10px;
+    }
+
+    .pl-2 {
+        padding-left: 10px;
+    }
+    
+    body {
+        font-size: 12px;
+        font-family: monospace;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .text-red {
+        color: #ad1f2b;
+    }
+
+    .product-description li {
+        display: inline-block;
+        width: 50%;
+    }
+
+    .w-full {
+        width: 100%;
+    }
+
+    .textline {
+        border-bottom: 1px solid #000;
+        padding-bottom: 3px;
+        padding-top: 2px;
+    }
+
+    .table-two-columns td,
+    .table-two-columns th {
+        width: 50%;
+    }
+
+    .table-product-name {
+        margin: 6px 0;
+    }
+
+    table.table-attributes {
+        margin-bottom: 10px;
+        table-layout: fixed;
+    }
+
+    table.table-attributes td,
+    table.table-attributes th {
+        max-width: 280px;
+        width: 280px;
+    }
+
+    .table-attributes-bottom {
+        margin: 0 4px;
+    }
+
+    .table-details {
+        border-collapse: collapse;
+    }
+
+    .table-details th {
+        border-bottom: 1px solid #ad1f2b;
+        text-transform: uppercase;
+    }
+
+    .table-details td {
+        border-bottom: 1px solid #000;
+    }
+
+    .table-stamps {
+        margin-bottom: 5px;
+    }
+
+    .footer {
+        border-collapse: collapse;
+    }
+
+    .footer td {
+        font-size: 16px;
+        color: #fff;
+        background-color: #ad1f2b;
+        padding: 8px 15px;
+    }
+
+    .footer .copyright {
+        font-size: 11px;
+    }
+</style>

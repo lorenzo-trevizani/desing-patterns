@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * PDP Group Sections
+ *
+ * @package CustomVendor_PDPGroupSections
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use CustomVendor\PDPGroupSections\ViewModel\SeparateAttributesViewModel;
+use Magento\Catalog\Helper\Output as CatalogOutputHelper;
+use Magento\Catalog\Block\Product\View\Attributes;
+use Magento\Catalog\Model\Product;
+use Magento\Framework\Escaper;
+
+/**
+ * @var ViewModelRegistry $viewModels
+ * @var CatalogOutputHelper $output
+ * @var Attributes $block
+ * @var Escaper $escaper
+ */
+
+/** @var SeparateAttributesViewModel $separateAttributesViewModel */
+$separateAttributesViewModel = $viewModels->require(SeparateAttributesViewModel::class);
+
+/** @var CatalogOutputHelper $catalogOutputHelper */
+$catalogOutputHelper = $this->helper(CatalogOutputHelper::class);
+
+/** @var Product $product */
+$product = $block->getProduct();
+
+$allAttributes = [];
+if ($attributeGroups = $separateAttributesViewModel->getDistributedAttributes($block->getAdditionalData())) {
+    foreach ($attributeGroups as $group) {
+        if (!empty($group['attributes'])) {
+            foreach ($group['attributes'] as $attribute) {
+                $attributeValue = $product->getResource()->getAttribute($attribute['code'])->getFrontend()->getValue($product);
+                $allAttributes[(string)$group['label']][] = [
+                    'label' => $attribute['label'],
+                    'value' => $attributeValue,
+                ];
+            }
+        }
+    }
+}
+?>
+
+<?php if (!empty($allAttributes)): ?>
+    <?php foreach ($allAttributes as $groupName => $group): ?>
+        <table class="w-full table-details table-attributes">
+            <?php if (!empty($group)): ?>
+                <thead>
+                    <tr>
+                        <th align="left" class="text-red">
+                            <?= $escaper->escapeHtml($groupName) ?>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($group as $attribute): ?>
+                        <tr>
+                            <td align="left" style="border-right: 1px solid #000;"><?= $escaper->escapeHtml($attribute['label']) ?></td>
+                            <td align="right"><?= $escaper->escapeHtml($attribute['value']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            <?php endif; ?>
+        </table>
+    <?php endforeach; ?>
+<?php endif; ?>

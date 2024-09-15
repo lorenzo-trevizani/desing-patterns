@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * PDP Group Sections
+ *
+ * @package CustomVendor_PDPGroupSections
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use CustomVendor\PDPGroupSections\Block\Product\View\Attributes;
+use Magento\Framework\Escaper;
+
+/**
+ * @var ViewModelRegistry $viewModels
+ * @var Attributes $block
+ * @var Escaper $escaper
+ */
+
+/** @var HeroiconsOutline $heroicons */
+$heroiconsOutline = $viewModels->require(HeroiconsOutline::class);
+
+?>
+
+<div
+    id="product-attribute-documents"
+    x-data="productPdfInfo"
+    class="flex flex-wrap justify-center w-full"
+>
+    <template x-if="allPdfDocuments.length">
+        <div class="additional-attributes w-full">
+            <template x-for="pdfFile in allPdfDocuments">
+                <div class="flex flex-row border-b border-gray-300 last:border-b-0 pb-4 mb-4 gap-3">
+                    <div class="mr-5 content-center">
+                        <a
+                            :href="pdfFile.value"
+                            target="_blank"
+                            :aria-label="pdfFile.label"
+                        >
+                            <?= $heroiconsOutline->pdfFileHtml('stroke-red-darker', 72, 72) ?>
+                        </a>
+                    </div>
+                    <div class="flex flex-col self-center">
+                        <span class="text-xl" x-text="pdfFile.label"></span>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+</div>

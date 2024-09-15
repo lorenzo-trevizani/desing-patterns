@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Certification Stamps' Product Attribute
+ *
+ * @package CustomVendor_CertificationStamps
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use CustomVendor\CertificationStamps\Block\Stamps;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Escaper $escaper
+ * @var Stamps $block
+ */
+$productStamps = $block->getAllProductStamps();
+?>
+
+<table class="table-stamps">
+    <tbody>
+        <tr>
+            <td>
+                <?php foreach ($productStamps as $stamp): ?>
+                    <?php if (isset($stamp[$block->getSwatchImageUrlkey()])): ?>
+                        <img style="height: 22px; width: auto;" src="<?= $escaper->escapeUrl($stamp[$block->getSwatchImageUrlkey()]) ?>">
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </td>
+        </tr>
+    </tbody>
+</table>

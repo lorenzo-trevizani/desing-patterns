@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * PDP Group Sections
+ *
+ * @package CustomVendor_PDPGroupSections
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use CustomVendor\PDPGroupSections\ViewModel\SeparateAttributesViewModel;
+use Magento\Catalog\Helper\Output as CatalogOutputHelper;
+use Magento\Catalog\Block\Product\View\Attributes;
+use Magento\Catalog\Model\Product;
+use Magento\Framework\Escaper;
+
+/**
+ * @var ViewModelRegistry $viewModels
+ * @var CatalogOutputHelper $output
+ * @var Attributes $block
+ * @var Escaper $escaper
+ */
+
+/** @var SeparateAttributesViewModel $separateAttributesViewModel */
+$separateAttributesViewModel = $viewModels->require(SeparateAttributesViewModel::class);
+
+/** @var CatalogOutputHelper $catalogOutputHelper */
+$catalogOutputHelper = $this->helper(CatalogOutputHelper::class);
+
+/** @var Product $product */
+$product = $block->getProduct();
+?>
+
+<?php if ($attributeGroups = $separateAttributesViewModel->getDistributedAttributes($block->getAdditionalData())): ?>
+    <div id="product-attributes" class="attribute-groups flex md:grid flex-col md:grid-cols-2 2xl:grid-cols-4 gap-3 justify-between">
+        <?php foreach ($attributeGroups as $group): ?>
+            <?php if (!empty($group['attributes'])): ?>
+                <div class="attribute-group border mb-auto">
+                    <div class="attribute-group-title border-b border-gray-300 bg-background px-2 py-3">
+                        <span class="text-lg font-semibold text-gray-900">
+                            <?= $escaper->escapeHtml($group['label']) ?>
+                        </span>
+                    </div>
+
+                    <div class="table-wrapper max-w-prose overflow-x-auto">
+                        <table class="additional-attributes w-full">
+                            <?php foreach ($group['attributes'] as $attribute): ?>
+                                <tr class="border-b border-gray-300 last:border-b-0">
+                                    <th class="col label w-1/2 py-2 pl-2 text-left text-gray-700 text-base font-normal product-attribute-label"
+                                        scope="row"><?= $escaper->escapeHtml($attribute['label']) ?></th>
+                                    <td class="col data w-1/2 py-2 px-2 text-left text-gray-900 text-base product-attribute-value"
+                                        data-th="<?= $escaper->escapeHtmlAttr($attribute['label']) ?>"
+                                        ><?= /* @noEscape */
+                                        $product->getResource()->getAttribute($attribute['code'])->getFrontend()->getValue($product) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+<?php endif;?>

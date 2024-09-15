@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Certification Stamps' Product Attribute
+ * PDP Group Sections
  *
- * @package CustomVendor_CertificationStamps
+ * @package CustomVendor_PDPGroupSections
  * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
  * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
  */
@@ -15,7 +15,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="CustomVendor_CertificationStamps::settings" title="Custom Vendor Certification Stamps settings" sortOrder="45" />
+                            <resource id="CustomVendor_PDPGroupSections::settings" title="CustomVendor PDP Group Sections settings" sortOrder="46" />
                         </resource>
                     </resource>
                 </resource>

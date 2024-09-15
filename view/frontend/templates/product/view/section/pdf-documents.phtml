@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * PDP Group Sections
+ *
+ * @package CustomVendor_PDPGroupSections
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use CustomVendor\PDPGroupSections\Block\Product\View\Attributes;
+use Magento\Framework\Escaper;
+use Magento\Catalog\Helper\Output as CatalogOutputHelper;
+use Magento\Catalog\Model\Product;
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundHelper
+
+/**
+ * @var ViewModelRegistry $viewModels
+ * @var Attributes $block
+ * @var Escaper $escaper
+ * @var CatalogOutputHelper $output
+ */
+
+/** @var HeroiconsOutline $heroicons */
+$heroiconsOutline = $viewModels->require(HeroiconsOutline::class);
+
+/** @var CatalogOutputHelper $catalogOutputHelper */
+$catalogOutputHelper = $this->helper(CatalogOutputHelper::class);
+
+/** @var Product $product */
+$product = $block->getProduct();
+
+?>
+
+<div
+    x-data="productPdfInfo"
+    class="pdf-documents mb-4"
+>
+    <template x-if="allPdfDocuments.length">
+        <div class="flex flex-row sm:flex-wrap gap-3 whitespace-nowrap overflow-auto pb-2 mb-2">
+            <template x-for="(pdfFile, index) in allPdfDocuments">
+                <template x-if="index < 3">
+                    <a
+
+                        :href="pdfFile.value"
+                        target="_blank"
+                        :aria-label="pdfFile.label"
+                        class="btn btn-secondary text-btn"
+                    >
+                        <span class="mr-2 font-bold">
+                            <?= $heroiconsOutline->downloadHtml('stroke-current', 20, 20, ['aria-hidden' => 'true']) ?>
+                        </span>
+                        <span class="mr-2 font-bold" x-text="pdfFile.label"></span>
+                    </a>
+                </template>
+            </template>
+        </div>
+
+        <span class="underline text-btn font-bold cursor-pointer" @click="dispatchSetActiveDocument('product.documents')">
+            <?= $escaper->escapeHtml(__("View all documents")) ?>
+        </span>
+    </template>
+</div>
+
+<script>
+    function productPdfInfo() {
+        return {
+            allPdfDocuments: [],
+
+            init() {
+                const urlFetch = '<?= $escaper->escapeUrl($block->getUrl('cloudinary/get/index')) ?>';
+                const payload = new URLSearchParams({product_id: <?= /* @noEscape */ $product->getId(); ?>})
+
+                return fetch(urlFetch, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: payload.toString()
+                }).then(payload => {
+                    return payload.json().then(response => {
+                        this.allPdfDocuments = response;
+                    });
+                }).catch(error => {
+                    console.error("Erros displaying documents: " + error);
+                });
+            },
+
+            dispatchSetActiveDocument(data) {
+                const setActiveSectionPDP = new CustomEvent("set-active-section-pdp", {
+                    detail: {
+                        data: data
+                    }
+                });
+
+                window.dispatchEvent(setActiveSectionPDP);
+            }
+        }
+    }
+</script>

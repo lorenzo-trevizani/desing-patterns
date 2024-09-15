@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * PDP Group Sections
+ *
+ * @package CustomVendor_PDPGroupSections
+ * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
+ * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
+ */
+
+declare(strict_types=1);
+
+use CustomVendor\PDPGroupSections\Block\Product\View\Attributes;
+use Magento\Framework\Escaper;
+use Magento\Catalog\Helper\Output as CatalogOutputHelper;
+use Magento\Catalog\Model\Product;
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundHelper
+
+/**
+ * @var Attributes $block
+ * @var Escaper $escaper
+ * @var CatalogOutputHelper $output
+ */
+
+/** @var CatalogOutputHelper $catalogOutputHelper */
+$catalogOutputHelper = $this->helper(CatalogOutputHelper::class);
+
+/** @var Product $product */
+$product = $block->getProduct();
+
+?>
+
+<?php if ($attributes = $block->getAllSectionAttributes(Attributes::XML_PATH_FEATURE_ATTRIBUTE)): ?>
+    <div class="table-wrapper max-w-prose overflow-x-auto" id="product-attribute-features">
+        <table class="additional-attributes w-full">
+            <?php foreach ($attributes as $attribute): ?>
+                <tr class="border-b border-gray-300 last:border-b-0">
+                    <th class="col label w-1/2 py-2 text-left text-gray-700 text-base font-normal product-attribute-label"
+                        scope="row"><?= $escaper->escapeHtml($attribute['label']) ?></th>
+                    <td class="col data w-1/2 py-2 pl-2 text-left text-gray-900 text-base product-attribute-value"
+                        data-th="<?= $escaper->escapeHtmlAttr($attribute['label']) ?>"
+                    ><?= /* @noEscape */
+                     $product->getResource()->getAttribute($attribute['code'])->getFrontend()->getValue($product) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>

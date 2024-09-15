@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Certification Stamps' Product Attribute
+ * PDP Group Sections
  *
- * @package CustomVendor_CertificationStamps
+ * @package CustomVendor_PDPGroupSections
  * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
  * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
  */
@@ -12,8 +12,71 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="product.info">
-            <block name="product.certification.stamps" class="CustomVendor\CertificationStamps\Block\Stamps" 
-                    template="CustomVendor_CertificationStamps::product/view/certification-stamps.phtml">
+            <block name="product.pdf.documents" class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                    template="CustomVendor_PDPGroupSections::product/view/section/pdf-documents.phtml">
+            </block>
+        </referenceBlock>
+
+        <referenceBlock name="product.attributes">
+            <action method="setTemplate">
+                <argument name="templatae" xsi:type="string">CustomVendor_PDPGroupSections::product/view/attributes.phtml</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceBlock name="product.info.details">
+            <block name="product.features"
+                class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                as="features"
+                template="CustomVendor_PDPGroupSections::product/view/features.phtml"
+                group="detailed_info">
+                <arguments>
+                    <argument name="title" xsi:type="string" translate="true">Features</argument>
+                    <argument name="sort_order" xsi:type="number">30</argument>
+                </arguments>
+            </block>
+
+            <block name="product.documents"
+                class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                as="documents"
+                template="CustomVendor_PDPGroupSections::product/view/documents.phtml"
+                group="detailed_info">
+                <arguments>
+                    <argument name="title" xsi:type="string" translate="true">Documents</argument>
+                    <argument name="sort_order" xsi:type="number">40</argument>
+                </arguments>
+            </block>
+
+            <block name="product.tools"
+                class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                as="tools"
+                template="CustomVendor_PDPGroupSections::product/view/tools.phtml"
+                group="detailed_info">
+                <arguments>
+                    <argument name="title" xsi:type="string" translate="true">Tools</argument>
+                    <argument name="sort_order" xsi:type="number">50</argument>
+                </arguments>
+            </block>
+
+            <block name="product.packaging"
+                class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                as="packaging"
+                template="CustomVendor_PDPGroupSections::product/view/packaging.phtml"
+                group="detailed_info">
+                <arguments>
+                    <argument name="title" xsi:type="string" translate="true">Packaging</argument>
+                    <argument name="sort_order" xsi:type="number">60</argument>
+                </arguments>
+            </block>
+
+            <block name="product.compliance"
+                class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                as="compliance"
+                template="CustomVendor_PDPGroupSections::product/view/compliance.phtml"
+                group="detailed_info">
+                <arguments>
+                    <argument name="title" xsi:type="string" translate="true">Compliance</argument>
+                    <argument name="sort_order" xsi:type="number">70</argument>
+                </arguments>
             </block>
         </referenceBlock>
     </body>

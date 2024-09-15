@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="empty"/>
+    <body>
+        <referenceContainer name="root">
+            <block name="product_specs_pdf"
+                class="CustomVendor\PDPGroupSections\Block\ProductSpecs"
+                template="CustomVendor_PDPGroupSections::product/product_specs/pdf.phtml"
+            >
+                <block name="pdf.certification.stamps" class="CustomVendor\CertificationStamps\Block\Stamps"
+                    template="CustomVendor_PDPGroupSections::product/product_specs/pdf/certification-stamps.phtml">
+                </block>
+
+                <block name="pdf.attributes" class="Magento\Catalog\Block\Product\View\Attributes"
+                    template="CustomVendor_PDPGroupSections::product/product_specs/pdf/attributes.phtml">
+                </block>
+
+                <block name="pdf.attributes.packaging" class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                    template="CustomVendor_PDPGroupSections::product/product_specs/pdf/packaging.phtml">
+                </block>
+
+                <block name="pdf.attributes.compliance" class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                    template="CustomVendor_PDPGroupSections::product/product_specs/pdf/compliance.phtml">
+                </block>
+
+                <block name="pdf.attributes.features" class="CustomVendor\PDPGroupSections\Block\Product\View\Attributes"
+                    template="CustomVendor_PDPGroupSections::product/product_specs/pdf/features.phtml">
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

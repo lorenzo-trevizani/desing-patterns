@@ -1,43 +1,81 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Certification Stamps' Product Attribute
+ * PDP Group Sections
  *
- * @package CustomVendor_CertificationStamps
+ * @package CustomVendor_PDPGroupSections
  * @author Lorenzo Trevizani <lm.trevizani@gmail.com>
  * @license https://opensource.org/licenses/OSL-3.0.php Open Software License 3.0
  */
  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="certification_stamps" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+        <tab id="CustomVendor" translate="label" sortOrder="150">
+            <label>IM Digital</label>
+        </tab>
+        <section id="pdp_group_sections" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Certification Stamps</label>
-            <tab>Custom Vendor</tab>
-            <resource>CustomVendor_CertificationStamps::settings</resource>
+            <label>PDP Group Sections</label>
+            <tab>CustomVendor</tab>
+            <resource>CustomVendor_PDPGroupSections::settings</resource>
 
-            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>General</label>
-                <attribute type="expanded">1</attribute>
+            <group id="feature_section" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Feature Section</label>
 
-                <field id="attribute_separator" translate="label, comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Attribute Separator</label>
-                    <comment>Define the separator char used for certification stamp swatch attribute. The char must be a varchar(255)</comment>
-                    <config_path>custom_vendor_certification_stamps/general/attribute_separator</config_path>
+                <field id="feature_attributes_group" translate="label, comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter by Attribute Group</label>
+                    <source_model>CustomVendor\PDPGroupSections\Model\Config\Source\AttributeGroupList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Filter by attribute group for the attributes to be displayed on "Attributes to display" field.</comment>
+                    <config_path>CustomVendor_pdp_group_sections/feature_section/attributes_group</config_path>
                 </field>
 
-                <field id="enable_multi_row" translate="label, comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enabled multiple rows</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <config_path>custom_vendor_certification_stamps/general/enable_multi_row</config_path>
+                <field id="feature_attributes" translate="label, comment" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Attributes to display</label>
+                    <source_model>CustomVendor\PDPGroupSections\Model\Config\Source\AttributeFeatureList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Define the attributes that will be displayed on Feature Section.</comment>
+                    <config_path>CustomVendor_pdp_group_sections/feature_section/attributes</config_path>
+                </field>
+            </group>
+
+            <group id="packaging_section" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Packaging Section</label>
+
+                <field id="packaging_attributes_group" translate="label, comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter by Attribute Group</label>
+                    <source_model>CustomVendor\PDPGroupSections\Model\Config\Source\AttributeGroupList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Filter by attribute group for the attributes to be displayed on "Attributes to display" field.</comment>
+                    <config_path>CustomVendor_pdp_group_sections/packaging_section/attributes_group</config_path>
                 </field>
 
-                <field id="attribute_mapping_configuration" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Acceptance Attribute Mapping Configuration</label>
-                    <frontend_model>CustomVendor\CertificationStamps\Block\Adminhtml\Form\Field\AttributeMapping</frontend_model>
-                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
-                    <config_path>custom_vendor_certification_stamps/general/attribute_mapping</config_path>
-                    <comment>Acceptance value mapping for attribute value</comment>
+                <field id="packaging_attributes" translate="label, comment" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Attributes to display</label>
+                    <source_model>CustomVendor\PDPGroupSections\Model\Config\Source\AttributePackagingList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Define the attributes that will be displayed on Packaging Section.</comment>
+                    <config_path>CustomVendor_pdp_group_sections/packaging_section/attributes</config_path>
+                </field>
+            </group>
+
+            <group id="compliance_section" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Compliance Section</label>
+
+                <field id="compliance_attributes_group" translate="label, comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter by Attribute Group</label>
+                    <source_model>CustomVendor\PDPGroupSections\Model\Config\Source\AttributeGroupList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Filter by attribute group for the attributes to be displayed on "Attributes to display" field.</comment>
+                    <config_path>CustomVendor_pdp_group_sections/compliance_section/attributes_group</config_path>
+                </field>
+
+                <field id="compliance_attributes" translate="label, comment" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Attributes to display</label>
+                    <source_model>CustomVendor\PDPGroupSections\Model\Config\Source\AttributeComplianceList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Define the attributes that will be displayed on Compliance Section.</comment>
+                    <config_path>CustomVendor_pdp_group_sections/compliance_section/attributes</config_path>
                 </field>
             </group>
         </section>
